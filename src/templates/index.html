@@ -1,0 +1,99 @@
+<!-- Partially generated using Claude Sonnet 4.5 -->
+
+{% extends "base.html" %}
+
+{% block title %}Readlog — Library{% endblock %}
+
+{% block content %}
+
+<!-- ── filter bar ──────────────────────────────────────── -->
+<form method="get" action="/">
+    <div class="filter-bar">
+        <div class="filter-row">
+            <div class="field">
+                <label>Title</label>
+                <input type="text" name="title" value="{{ filters.title }}" placeholder="Search title…">
+            </div>
+            <div class="field">
+                <label>Author</label>
+                <input type="text" name="author" value="{{ filters.author }}" placeholder="Search author…">
+            </div>
+            <div class="field">
+                <label>Genre</label>
+                <select name="genre">
+                    <option value="" {% if not filters.genre %}selected{% endif %}>All genres</option>
+                    {% for g in genres %}
+                    <option value="{{ g }}" {% if filters.genre == g %}selected{% endif %}>{{ g }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="field">
+                <label>Year</label>
+                <input type="number" name="year" value="{{ filters.year }}" placeholder="e.g. 2023">
+            </div>
+            <div class="field">
+                <label>Rating</label>
+                <select name="rating">
+                    <option value="" {% if not filters.rating %}selected{% endif %}>Any rating</option>
+                    {% for r in range(5, 0, -1) %}
+                    <option value="{{ r }}" {% if filters.rating|int == r %}selected{% endif %}>{{ r }} star{{ 's' if r != 1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="filter-actions">
+            {% if filters.title or filters.author or filters.genre or filters.year or filters.rating %}
+                <a href="/" class="btn btn-ghost">Clear</a>
+            {% endif %}
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+</form>
+
+<!-- ── stats ───────────────────────────────────────────── -->
+<div class="stat-bar">
+    Showing <strong>{{ books|length }}</strong> book{{ 's' if books|length != 1 }}
+    {% if filters.title or filters.author or filters.genre or filters.year or filters.rating %}
+        (filtered)
+    {% endif %}
+</div>
+
+<!-- ── book list ────────────────────────────────────────── -->
+{% if books %}
+<div class="book-list">
+    {% for book in books %}
+    <div class="book-card">
+        <div class="card-title">
+            <a href="/book/{{ book.isbn }}">{{ book.title }}</a>
+        </div>
+        <div class="card-meta">
+            {{ book.author }}
+            {% if book.genre %} &middot; {{ book.genre }}{% endif %}
+            {% if book.year %} &middot; {{ book.year }}{% endif %}
+            {% if book.date_read %} &middot; Read {{ book.date_read }}{% endif %}
+            {% if book.rating %}
+                &middot;
+                <span class="stars">
+                    {{ '★' * book.rating }}<span class="empty">{{ '★' * (5 - book.rating) }}</span>
+                </span>
+            {% endif %}
+        </div>
+        <div class="card-actions">
+            <a href="/book/{{ book.isbn }}" class="btn btn-ghost">View</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+<div class="empty-state">
+    <p>No books match your search.</p>
+    {% if filters.title or filters.author or filters.genre or filters.year or filters.rating %}
+        <a href="/" class="btn btn-ghost">Clear filters</a>
+    {% else %}
+        <a href="/add" class="btn btn-primary">Add your first book</a>
+    {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}
