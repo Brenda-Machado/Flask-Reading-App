@@ -24,7 +24,7 @@ def get_database():
 
 def init_database():
     db = get_database()
-    db.executescript("""CREATE TABLE IF NOT EXISTS books (
+    db.executescript("""CREATE TABLE IF NOT EXISTS library (
             isbn        TEXT PRIMARY KEY,
             title       TEXT NOT NULL,
             author      TEXT NOT NULL,
@@ -66,26 +66,25 @@ def index():
     parameters = []
 
     if title:
-        query += "AND title LIKE ?" # we can add personalized filters
+        query += " AND title LIKE ?" # we can add personalized filters
         parameters.append(f"%{title}%")
     if author:
-        query += "AND author LIKE ?" 
+        query += " AND author LIKE ?" 
         parameters.append(f"%{author}%")
     if genre:
-        query += "AND genre LIKE ?" 
+        query += " AND genre LIKE ?" 
         parameters.append(f"%{genre}%")
     if year:
-        query += "AND year LIKE ?" 
+        query += " AND year LIKE ?" 
         parameters.append(f"%{year}%")
     if rating:
-        query += "AND rating LIKE ?" 
+        query += " AND rating LIKE ?" 
         parameters.append(f"%{rating}%")
     
-    query += "ORDER BY data_read DESC NULLS LAST"
+    query += " ORDER BY date_read DESC NULLS LAST"
     books = db.execute(query, parameters).fetchall()
     genres = [
-        row["genre"] for row in db.execute("SELECT DISTINCT genre FROM library WHERE" \
-        "genre IS NOT NULL ORDER BY genre")
+        row["genre"] for row in db.execute("SELECT DISTINCT genre FROM books WHERE genre IS NOT NULL ORDER BY genre").fetchall()
     ]
 
     return render_template(
@@ -125,7 +124,7 @@ def add_book():
             return render_template("add.html", error=error) # TODO make a error page
 
         db = get_database()
-        isbn_exists = db.execute("SELECT isbn FROM library WHERE isbn = ?", (isbn,)).fetchnone()
+        isbn_exists = db.execute("SELECT isbn FROM library WHERE isbn = ?", (isbn,)).fetchone()
         
         if isbn_exists:
             return render_template("add.html", error="A book with this ISBN already exists.")
@@ -154,7 +153,7 @@ def add_book():
 @app.route("/book/<isbn>")
 def book_detail(isbn):
     db = get_database()
-    book = db.execute("SELECT * FROM library WHERE isbn = ?", (isbn,)).fetchnone()
+    book = db.execute("SELECT * FROM library WHERE isbn = ?", (isbn,)).fetchone()
     
     if book is None:
         return "Book not found", 404

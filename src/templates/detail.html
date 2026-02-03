@@ -1,0 +1,75 @@
+{% extends "database.html" %}
+
+{% block title %}Readlog — {{ book.title }}{% endblock %}
+
+{% block content %}
+
+<div class="detail-hero">
+    <h2>{{ book.title }}</h2>
+    <div class="author">by {{ book.author }}</div>
+    {% if book.rating %}
+    <div class="stars" style="margin-top: 8px; font-size: 1.15rem;">
+        {{ '★' * book.rating }}<span class="empty">{{ '★' * (5 - book.rating) }}</span>
+    </div>
+    {% endif %}
+</div>
+
+<div class="detail-grid">
+    <div>
+        <div class="label">ISBN</div>
+        <div class="value">{{ book.isbn }}</div>
+    </div>
+    {% if book.publisher %}
+    <div>
+        <div class="label">Publisher</div>
+        <div class="value">{{ book.publisher }}</div>
+    </div>
+    {% endif %}
+    {% if book.year %}
+    <div>
+        <div class="label">Year</div>
+        <div class="value">{{ book.year }}</div>
+    </div>
+    {% endif %}
+    {% if book.genre %}
+    <div>
+        <div class="label">Genre</div>
+        <div class="value">{{ book.genre }}</div>
+    </div>
+    {% endif %}
+    {% if book.language %}
+    <div>
+        <div class="label">Language</div>
+        <div class="value">{{ book.language }}</div>
+    </div>
+    {% endif %}
+    {% if book.pages %}
+    <div>
+        <div class="label">Pages</div>
+        <div class="value">{{ book.pages }}</div>
+    </div>
+    {% endif %}
+    {% if book.date_read %}
+    <div>
+        <div class="label">Date read</div>
+        <div class="value">{{ book.date_read }}</div>
+    </div>
+    {% endif %}
+</div>
+
+{% if book.review %}
+<div class="review-block">
+    <div class="label">Review</div>
+    <p>{{ book.review }}</p>
+</div>
+{% endif %}
+
+<div class="detail-actions">
+    <a href="/" class="btn btn-ghost">Back to library</a>
+    <form method="post" action="/delete/{{ book.isbn }}" style="margin-left: auto;">
+        <button type="submit" class="btn btn-danger"
+                onclick="return confirm('Delete this book permanently?')">Delete</button>
+    </form>
+</div>
+
+{% endblock %}
