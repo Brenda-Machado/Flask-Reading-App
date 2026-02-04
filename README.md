@@ -1,8 +1,12 @@
+<p align="center">
+  <img src="screenshots/Readlog.png" />
+</p>
+
 # Readlog
 
 A book reading tracker built with Flask and SQLite3.
 
-**CS50x 2026 Final Project**
+## CS50x 2026 Final Project
 
 ...
 
@@ -23,7 +27,7 @@ Then, install the requirements (which is just flask, actually):
 pip install -r requirements.txt
 ```
 
-Enter the `src/`directory and run the application:
+Enter the `src/` directory and run the application:
 
 ```
 cd src/
