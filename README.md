@@ -4,11 +4,11 @@
 
 # Readlog
 
-A book reading tracker built with Flask and SQLite3.
+A book reading tracker built with Flask, SQLite3, Python, HTML, CSS and JavaScript.
 
-## CS50x 2026 Final Project
+## `CS50x` 2026 Final Project
 
-...
+Video Demo: [Presentation - Readlog](https://youtu.be/E44KyshmvlY)
 
 ---
 
@@ -41,6 +41,8 @@ Open `http://127.0.0.1:5000` in your browser.
 
 ## Features
 
+A personal library which allows users to:
+
 - Add books with ISBN, title, author, and optional metadata
 - Rate and review books
 - Search by title, author, genre, year, or rating
@@ -49,15 +51,6 @@ Open `http://127.0.0.1:5000` in your browser.
 - Export .CSV
 
 ---
-
-## TODO!
-
-- Maybe make the appearence and layout different?
-- Dark option.
-- Import .csv.
-
----
-
 
 ## Screenshots
 
@@ -69,6 +62,18 @@ Open `http://127.0.0.1:5000` in your browser.
 
 ### Book Details
 ![Details](screenshots/detail.png)
+
+---
+
+Thanks `CS50x` for the excelent course! 🦆
+
+---
+
+## TO-DO! In the future...
+
+- Maybe make the appearence and layout different?
+- Dark option.
+- Import .csv.
 
 ---
 
