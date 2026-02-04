@@ -21,8 +21,15 @@ Then, install the requirements (which is just flask, actually):
 
 ```bash
 pip install -r requirements.txt
+```
+
+Enter the `src/`directory and run the application:
+
+```
+cd src/
 python app.py
 ```
+
 
 Open `http://127.0.0.1:5000` in your browser.
 
