@@ -27,8 +27,8 @@ def get_database():
 def init_database():
     db = get_database()
     db.executescript("""CREATE TABLE IF NOT EXISTS library (
-            isbn        TEXT PRIMARY KEY,
-            title       TEXT NOT NULL,
+            isbn        TEXT PRIMARY KEY UNIQUE,
+            title       TEXT NOT NULL UNIQUE,
             author      TEXT NOT NULL,
             publisher   TEXT,
             year        INTEGER,
