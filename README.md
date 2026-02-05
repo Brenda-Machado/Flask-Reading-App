@@ -74,6 +74,9 @@ Thanks `CS50x` for the excelent course! 🦆
 - Maybe make the appearence and layout different?
 - Dark option.
 - Import .csv.
+- Check for title duplicates on editing information.
+- Change ISBN for a different id?
+- Import data from the web, maybe a public database?
 
 ---
 

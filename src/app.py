@@ -34,7 +34,7 @@ def init_database():
             year        INTEGER,
             genre       TEXT,
             language    TEXT,
-            pages       INTEGER,
+            pages       INTEGER CHECK (pages > 0),
             date_read   TEXT,
             rating      INTEGER CHECK (rating BETWEEN 1 AND 5),
             review      TEXT
